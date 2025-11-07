@@ -15,13 +15,14 @@ export function RootProvider({ children }: { children: ReactNode }) {
         },
         wallet: {
           display: "modal",
-          preference: "all",
+          // Prioritize Base Account
+          preference: "baseAccount",
         },
       }}
-      miniKit={{
+      baseAccount={{
         enabled: true,
-        autoConnect: true,
-        notificationProxyUrl: undefined,
+        clientId: process.env.NEXT_PUBLIC_BASE_ACCOUNT_CLIENT_ID,
+        callbackURL: process.env.NEXT_PUBLIC_BASE_ACCOUNT_CALLBACK_URL,
       }}
     >
       {children}

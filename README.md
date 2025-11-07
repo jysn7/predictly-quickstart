@@ -1,9 +1,17 @@
-# Waitlist Mini App Quickstart
+# Predictly
 
-This is a demo Mini App application built using OnchainKit and the Farcaster SDK. Build a waitlist sign-up mini app for your company that can be published to the Base app and Farcaster. 
+A decentralized predictions platform built on BASE. Users can make predictions about events, track their accuracy, and compete on the leaderboard. Powered by AI for prediction analysis and explanation.
 
-> [!IMPORTANT]  
-> Before interacting with this demo, please review our [disclaimer](#disclaimer) — there are **no official tokens or apps** associated with Cubey, Base, or Coinbase.
+![Vercel Deploy](https://therealsujitk-vercel-badge.vercel.app/?app=predictly-quickstart) [![MIT License](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+
+## Features
+
+- 🎯 Create and track predictions with confidence levels
+- 🤖 AI-powered prediction analysis and explanations
+- 📊 Global leaderboard with prediction accuracy tracking
+- 🔄 Activity feed showing recent predictions
+- 🔒 Farcaster-based authentication
+- 🎨 Clean, modern UI with dark theme
 
 ## Prerequisites
 
@@ -16,108 +24,92 @@ Before getting started, make sure you have:
 
 ## Getting Started
 
-### 1. Clone this repository 
+## Quick Start
 
 ```bash
-git clone https://github.com/base/demos.git
-```
-
-### 2. Install dependencies:
-
-```bash
-cd demos/minikit/waitlist-mini-app-qs
+# Install dependencies
 npm install
-```
 
-### 3. Configure environment variables
+# Copy example env and configure
+cp .env.example .env.local
 
-Create a `.env.local` file and add your environment variables:
-
-```bash
-NEXT_PUBLIC_PROJECT_NAME="Your App Name"
-NEXT_PUBLIC_ONCHAINKIT_API_KEY=<Replace-WITH-YOUR-CDP-API-KEY>
-NEXT_PUBLIC_URL=
-```
-
-### 4. Run locally:
-
-```bash
+# Run development server
 npm run dev
 ```
 
-## Customization
+Open [http://localhost:3000](http://localhost:3000) to view the app.
 
-### Update Manifest Configuration
+## Environment Setup
 
-The `minikit.config.ts` file configures your manifest located at `app/.well-known/farcaster.json`.
-
-**Skip the `accountAssociation` object for now.**
-
-To personalize your app, change the `name`, `subtitle`, and `description` fields and add images to your `/public` folder. Then update their URLs in the file.
-
-## Deployment
-
-### 1. Deploy to Vercel
+Create `.env.local` with these variables:
 
 ```bash
-vercel --prod
+# Required for authentication
+NEXT_PUBLIC_URL=http://localhost:3000
+
+# Required for AI features (optional in demo mode)
+OPENAI_API_KEY=your_openai_key_here
+
+# Required for BASE integration (optional in demo mode)
+BASE_API_KEY=your_base_api_key_here
+BASE_PROJECT_ID=your_project_id_here
+BASE_API_URL=https://api.base.app
+
+# Set to 'true' to run frontend in static demo mode
+NEXT_PUBLIC_USE_STATIC_DEMO=true
 ```
 
-You should have a URL deployed to a domain similar to: `https://your-vercel-project-name.vercel.app/`
+## Demo Mode vs Production
 
-### 2. Update environment variables
+The app can run in two modes:
 
-Add your production URL to your local `.env` file:
+### Demo Mode
+- Set `NEXT_PUBLIC_USE_STATIC_DEMO=true`
+- Uses in-memory storage and mock AI responses
+- No external API dependencies
+- Perfect for local development and prototypes
 
-```bash
-NEXT_PUBLIC_PROJECT_NAME="Your App Name"
-NEXT_PUBLIC_ONCHAINKIT_API_KEY=<Replace-WITH-YOUR-CDP-API-KEY>
-NEXT_PUBLIC_URL=https://your-vercel-project-name.vercel.app/
-```
+### Production Mode
+- Set `NEXT_PUBLIC_USE_STATIC_DEMO=false`
+- Requires BASE credentials and OpenAI API key
+- Persists data and uses real AI analysis
+- Required for deployed production instances
 
-### 3. Upload environment variables to Vercel
+## Documentation
 
-Add environment variables to your production environment:
+- [API Reference](docs/api-reference.md) - Detailed API endpoints and schemas
+- [Architecture](docs/architecture.md) - System design and data flow
+- [Authentication](docs/authentication.md) - Farcaster auth integration
+- [BASE Integration](docs/base-integration.md) - How to connect to BASE
+- [Contributing](docs/contributing.md) - Development guidelines
+- [Deployment](docs/deployment.md) - Deployment instructions
+- [Security](docs/security.md) - Security considerations
 
-```bash
-vercel env add NEXT_PUBLIC_PROJECT_NAME production
-vercel env add NEXT_PUBLIC_ONCHAINKIT_API_KEY production
-vercel env add NEXT_PUBLIC_URL production
-```
+## Contributing
 
-## Account Association
+1. Fork the repo
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
-### 1. Sign Your Manifest
+## Tech Stack
 
-1. Navigate to [Farcaster Manifest tool](https://farcaster.xyz/~/developers/mini-apps/manifest)
-2. Paste your domain in the form field (ex: your-vercel-project-name.vercel.app)
-3. Click the `Generate account association` button and follow the on-screen instructions for signing with your Farcaster wallet
-4. Copy the `accountAssociation` object
+- **Framework:** Next.js 13+ (App Router)
+- **Authentication:** Farcaster Quick Auth
+- **Styling:** CSS Modules + CSS Variables
+- **Database:** BASE (production) / In-memory (demo)
+- **AI:** OpenAI GPT API
+- **Deploy:** Vercel
 
-### 2. Update Configuration
+## License
 
-Update your `minikit.config.ts` file to include the `accountAssociation` object:
+Distributed under the MIT License. See `LICENSE` for more information.
 
-```ts
-export const minikitConfig = {
-    accountAssociation: {
-        "header": "your-header-here",
-        "payload": "your-payload-here",
-        "signature": "your-signature-here"
-    },
-    frame: {
-        // ... rest of your frame configuration
-    },
-}
-```
+## Support
 
-### 3. Deploy Updates
-
-```bash
-vercel --prod
-```
-
-## Testing and Publishing
+- [Issue Tracker](https://github.com/jysn7/predictly-quickstart/issues)
+- [Discussions](https://github.com/jysn7/predictly-quickstart/discussions)
 
 ### 1. Preview Your App
 

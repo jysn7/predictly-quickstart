@@ -35,6 +35,8 @@ const sourceCodePro = Source_Code_Pro({
   subsets: ["latin"],
 });
 
+import Sidebar from "./components/Sidebar";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -44,7 +46,12 @@ export default function RootLayout({
     <RootProvider>
       <html lang="en">
         <body className={`${inter.variable} ${sourceCodePro.variable}`}>
-          <SafeArea>{children}</SafeArea>
+          <div className="app-frame">
+            <Sidebar />
+            <div className="main-content">
+              <SafeArea>{children}</SafeArea>
+            </div>
+          </div>
         </body>
       </html>
     </RootProvider>
