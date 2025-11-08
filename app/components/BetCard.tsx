@@ -74,9 +74,11 @@ export default function BetCard({
         backgroundColor: '#1a1a1a',
         border: '1px solid #333',
         borderRadius: '12px',
-        padding: '20px',
+        padding: '1rem',
         cursor: onClick ? 'pointer' : 'default',
         transition: 'all 0.3s ease',
+        maxWidth: '100%',
+        overflow: 'hidden',
       }}
       onMouseEnter={(e) => {
         if (onClick) {
@@ -90,27 +92,28 @@ export default function BetCard({
       }}
     >
       {/* Header */}
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'start', marginBottom: '15px' }}>
-        <div style={{ flex: 1 }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '5px' }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'start', marginBottom: '12px', gap: '8px', flexWrap: 'wrap' }}>
+        <div style={{ flex: 1, minWidth: '0' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '5px' }}>
             <div
               style={{
-                width: '36px',
-                height: '36px',
+                width: '32px',
+                height: '32px',
                 borderRadius: '50%',
                 backgroundColor: '#a78bfa30',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                fontSize: '16px',
+                fontSize: '14px',
                 fontWeight: 'bold',
                 color: '#a78bfa',
+                flexShrink: 0,
               }}
             >
               {bet.username?.charAt(0).toUpperCase() || '?'}
             </div>
-            <div>
-              <p style={{ margin: 0, fontSize: '14px', fontWeight: '600', color: '#fff' }}>
+            <div style={{ minWidth: '0', overflow: 'hidden' }}>
+              <p style={{ margin: 0, fontSize: '14px', fontWeight: '600', color: '#fff', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                 {bet.username || 'Anonymous'}
               </p>
               <p style={{ margin: '2px 0 0 0', fontSize: '12px', color: '#999' }}>
@@ -123,9 +126,10 @@ export default function BetCard({
           style={{
             backgroundColor: '#333',
             color: '#999',
-            padding: '4px 12px',
+            padding: '4px 10px',
             borderRadius: '20px',
-            fontSize: '12px',
+            fontSize: '11px',
+            flexShrink: 0,
           }}
         >
           {bet.sport}
@@ -133,15 +137,15 @@ export default function BetCard({
       </div>
 
       {/* Match Info */}
-      <div style={{ marginBottom: '15px' }}>
-        <div style={{ fontSize: '14px', color: '#ccc', marginBottom: '5px' }}>
+      <div style={{ marginBottom: '12px' }}>
+        <div style={{ fontSize: '14px', color: '#ccc', marginBottom: '5px', wordBreak: 'break-word' }}>
           <strong>{bet.homeTeam}</strong> vs <strong>{bet.awayTeam}</strong>
         </div>
-        <div style={{ fontSize: '12px', color: '#999', display: 'flex', alignItems: 'center', gap: '5px' }}>
-          <MapPin size={12} /> {bet.location}
+        <div style={{ fontSize: '12px', color: '#999', display: 'flex', alignItems: 'center', gap: '5px', marginBottom: '3px' }}>
+          <MapPin size={12} style={{ flexShrink: 0 }} /> <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{bet.location}</span>
         </div>
         <div style={{ fontSize: '12px', color: '#999', display: 'flex', alignItems: 'center', gap: '5px' }}>
-          <Calendar size={12} /> {bet.matchDateTime}
+          <Calendar size={12} style={{ flexShrink: 0 }} /> {bet.matchDateTime}
         </div>
       </div>
 
@@ -151,34 +155,36 @@ export default function BetCard({
           backgroundColor: '#0f0f0f',
           border: `1px solid ${getConfidenceColor(bet.confidence)}30`,
           borderRadius: '8px',
-          padding: '15px',
-          marginBottom: '15px',
+          padding: '12px',
+          marginBottom: '12px',
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'center',
+          gap: '8px',
         }}
       >
-        <div>
-          <p style={{ margin: '0 0 5px 0', fontSize: '12px', color: '#999', textTransform: 'uppercase' }}>
+        <div style={{ minWidth: '0', overflow: 'hidden' }}>
+          <p style={{ margin: '0 0 5px 0', fontSize: '11px', color: '#999', textTransform: 'uppercase' }}>
             Prediction
           </p>
-          <p style={{ margin: 0, fontSize: '18px', fontWeight: '700', color: '#a78bfa' }}>
+          <p style={{ margin: 0, fontSize: '16px', fontWeight: '700', color: '#a78bfa', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
             {bet.prediction}
           </p>
         </div>
         <div
           style={{
-            width: '60px',
-            height: '60px',
+            width: '50px',
+            height: '50px',
             borderRadius: '50%',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
             backgroundColor: `${getConfidenceColor(bet.confidence)}20`,
             border: `2px solid ${getConfidenceColor(bet.confidence)}`,
-            fontSize: '20px',
+            fontSize: '16px',
             fontWeight: 'bold',
             color: getConfidenceColor(bet.confidence),
+            flexShrink: 0,
           }}
         >
           {bet.confidence}%
@@ -186,7 +192,7 @@ export default function BetCard({
       </div>
 
       {/* Actions */}
-      <div style={{ display: 'flex', gap: '10px', marginTop: '15px', paddingTop: '15px', borderTop: '1px solid #333' }}>
+      <div style={{ display: 'flex', gap: '8px', marginTop: '12px', paddingTop: '12px', borderTop: '1px solid #333' }}>
         <button
           onClick={handleLike}
           style={{
@@ -194,8 +200,8 @@ export default function BetCard({
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            gap: '8px',
-            padding: '10px',
+            gap: '6px',
+            padding: '8px',
             backgroundColor: isLiked ? '#a78bfa20' : 'transparent',
             border: `1px solid ${isLiked ? '#a78bfa' : '#333'}`,
             borderRadius: '6px',
@@ -226,8 +232,8 @@ export default function BetCard({
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            gap: '8px',
-            padding: '10px',
+            gap: '6px',
+            padding: '8px',
             backgroundColor: 'transparent',
             border: '1px solid #333',
             borderRadius: '6px',

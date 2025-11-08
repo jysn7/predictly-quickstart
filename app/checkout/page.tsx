@@ -131,7 +131,7 @@ function CheckoutContent() {
 
   return (
     <main className="page-container">
-      <div style={{ maxWidth: '500px', margin: '0 auto' }}>
+      <div style={{ maxWidth: '500px', margin: '0 auto', width: '100%' }}>
         {/* Header with back button */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '2rem' }}>
           <button
@@ -163,11 +163,11 @@ function CheckoutContent() {
         {/* Order Summary Card */}
         <div
           style={{
-            padding: '2rem',
+            padding: '1.5rem',
             background: 'var(--surface)',
             border: '1px solid var(--border)',
             borderRadius: '12px',
-            marginBottom: '2rem',
+            marginBottom: '1.5rem',
           }}
         >
           <h2 style={{ fontSize: '1rem', fontWeight: '600', color: 'var(--text-secondary)', marginBottom: '1rem', textTransform: 'uppercase', letterSpacing: '0.5px' }}>

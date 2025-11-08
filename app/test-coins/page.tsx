@@ -55,39 +55,39 @@ export default function TestCoinsPage() {
         <h1 className="page-title">Test Coin Purchase System</h1>
       </div>
 
-      <div style={{ maxWidth: '800px', margin: '0 auto', display: 'flex', flexDirection: 'column', gap: '2rem' }}>
+      <div style={{ maxWidth: '800px', margin: '0 auto', display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
         {/* Current Balance Card */}
-        <div className="card" style={{ padding: '2rem' }}>
-          <h2 style={{ fontSize: '1.5rem', fontWeight: '700', marginBottom: '1.5rem' }}>
+        <div className="card">
+          <h2 style={{ fontSize: '1.25rem', fontWeight: '700', marginBottom: '1.5rem' }}>
             Your Coin Balance
           </h2>
 
           <div
             style={{
               display: 'grid',
-              gridTemplateColumns: '1fr 1fr',
-              gap: '1.5rem',
-              marginBottom: '2rem',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+              gap: '1rem',
+              marginBottom: '1.5rem',
             }}
           >
             {/* Balance Display */}
             <div
               style={{
                 backgroundColor: 'rgba(124, 58, 237, 0.1)',
-                padding: '1.5rem',
+                padding: '1.25rem',
                 borderRadius: '12px',
                 border: '2px solid var(--accent)',
                 textAlign: 'center',
               }}
             >
-              <div style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', marginBottom: '0.5rem' }}>
+              <div style={{ color: 'var(--text-secondary)', fontSize: '0.85rem', marginBottom: '0.5rem' }}>
                 <Coins style={{ display: 'inline', marginRight: '0.5rem' }} size={16} />
                 Total PDC Coins
               </div>
-              <div style={{ fontSize: '2.5rem', fontWeight: '700', color: 'var(--accent)' }}>
+              <div style={{ fontSize: '2rem', fontWeight: '700', color: 'var(--accent)' }}>
                 {coinBalance.toFixed(0)}
               </div>
-              <div style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', marginTop: '0.5rem' }}>
+              <div style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', marginTop: '0.5rem' }}>
                 PDC
               </div>
             </div>
@@ -96,7 +96,7 @@ export default function TestCoinsPage() {
             <div
               style={{
                 backgroundColor: 'rgba(124, 58, 237, 0.05)',
-                padding: '1.5rem',
+                padding: '1.25rem',
                 borderRadius: '12px',
                 border: '2px solid var(--border)',
                 display: 'flex',
@@ -104,13 +104,13 @@ export default function TestCoinsPage() {
                 justifyContent: 'center',
               }}
             >
-              <div style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', marginBottom: '0.5rem' }}>
+              <div style={{ color: 'var(--text-secondary)', fontSize: '0.85rem', marginBottom: '0.5rem' }}>
                 <Wallet style={{ display: 'inline', marginRight: '0.5rem' }} size={16} />
                 Your Wallet
               </div>
               <div
                 style={{
-                  fontSize: '0.85rem',
+                  fontSize: '0.75rem',
                   fontFamily: 'monospace',
                   color: 'var(--accent)',
                   wordBreak: 'break-all',
@@ -130,18 +130,18 @@ export default function TestCoinsPage() {
           )}
 
           {/* Action Buttons */}
-          <div style={{ display: 'flex', gap: '1rem' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
             <button
               onClick={() => setIsModalOpen(true)}
               style={{
-                flex: 1,
-                padding: '0.75rem 1.5rem',
+                width: '100%',
+                padding: '0.75rem 1.25rem',
                 backgroundColor: 'var(--accent)',
                 color: 'white',
                 border: 'none',
                 borderRadius: '6px',
                 fontWeight: '600',
-                fontSize: '1rem',
+                fontSize: '0.95rem',
                 cursor: 'pointer',
                 display: 'flex',
                 alignItems: 'center',
@@ -157,7 +157,8 @@ export default function TestCoinsPage() {
               onClick={() => refreshBalance(userWalletAddress)}
               disabled={isRefreshing}
               style={{
-                padding: '0.75rem 1.5rem',
+                width: '100%',
+                padding: '0.75rem 1.25rem',
                 backgroundColor: 'var(--surface)',
                 color: 'var(--text)',
                 border: '2px solid var(--border)',
@@ -166,6 +167,7 @@ export default function TestCoinsPage() {
                 cursor: isRefreshing ? 'not-allowed' : 'pointer',
                 display: 'flex',
                 alignItems: 'center',
+                justifyContent: 'center',
                 gap: '0.5rem',
                 opacity: isRefreshing ? 0.6 : 1,
               }}
@@ -177,8 +179,8 @@ export default function TestCoinsPage() {
         </div>
 
         {/* Instructions Card */}
-        <div className="card" style={{ padding: '2rem' }}>
-          <h2 style={{ fontSize: '1.25rem', fontWeight: '700', marginBottom: '1rem' }}>How to Test</h2>
+        <div className="card">
+          <h2 style={{ fontSize: '1.15rem', fontWeight: '700', marginBottom: '1rem' }}>How to Test</h2>
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', color: 'var(--text-secondary)' }}>
             <div>
@@ -228,10 +230,10 @@ export default function TestCoinsPage() {
         </div>
 
         {/* Coin Packages Info */}
-        <div className="card" style={{ padding: '2rem' }}>
-          <h2 style={{ fontSize: '1.25rem', fontWeight: '700', marginBottom: '1rem' }}>Available Coin Packages</h2>
+        <div className="card">
+          <h2 style={{ fontSize: '1.15rem', fontWeight: '700', marginBottom: '1rem' }}>Available Coin Packages</h2>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1rem' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: '0.75rem' }}>
             {[
               { coins: '10', usd: '$1.00' },
               { coins: '50', usd: '$5.00' },
@@ -259,8 +261,8 @@ export default function TestCoinsPage() {
         </div>
 
         {/* Troubleshooting */}
-        <div className="card" style={{ padding: '2rem', backgroundColor: 'rgba(239, 68, 68, 0.05)' }}>
-          <h2 style={{ fontSize: '1.25rem', fontWeight: '700', marginBottom: '1rem', color: 'var(--text)' }}>
+        <div className="card" style={{ backgroundColor: 'rgba(239, 68, 68, 0.05)' }}>
+          <h2 style={{ fontSize: '1.15rem', fontWeight: '700', marginBottom: '1rem', color: 'var(--text)' }}>
             Troubleshooting
           </h2>
 

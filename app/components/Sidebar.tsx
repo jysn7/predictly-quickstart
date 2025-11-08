@@ -144,7 +144,7 @@ export default function Sidebar() {
     <>
       {/* Mobile menu toggle */}
       <button
-        className="sidebar-toggle"
+        className={`sidebar-toggle ${open ? "hidden" : ""}`}
         aria-label="Open menu"
         onClick={() => setOpen(true)}
       >

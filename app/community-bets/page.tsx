@@ -6,6 +6,8 @@ import BetCard from '../components/BetCard';
 export default function CommunityBets() {
   const [bets, setBets] = useState<any[]>([]);
   const [filteredBets, setFilteredBets] = useState<any[]>([]);
+  const [displayedBets, setDisplayedBets] = useState<any[]>([]);
+  const [visibleCount, setVisibleCount] = useState(12);
   const [isLoading, setIsLoading] = useState(true);
   const [selectedSport, setSelectedSport] = useState('All Sports');
   const [sports, setSports] = useState<string[]>(['All Sports']);
@@ -38,6 +40,14 @@ export default function CommunityBets() {
   useEffect(() => {
     filterAndSortBets();
   }, [bets, selectedSport, sortBy, searchQuery]);
+
+  useEffect(() => {
+    setDisplayedBets(filteredBets.slice(0, visibleCount));
+  }, [filteredBets, visibleCount]);
+
+  const handleLoadMore = () => {
+    setVisibleCount(prev => prev + 12);
+  };
 
   const loadBets = async () => {
     try {
@@ -87,6 +97,7 @@ export default function CommunityBets() {
     }
 
     setFilteredBets(filtered);
+    setVisibleCount(12); // Reset visible count when filters change
   };
 
   const handleLike = async (betId: string) => {
@@ -171,10 +182,10 @@ export default function CommunityBets() {
         </button>
       </div>
 
-      <div className="predict-layout" style={{ display: 'flex', height: 'calc(100vh - 120px)', gap: '1.5rem' }}>
-        <section className="predict-main" style={{ flex: 1, display: 'flex', flexDirection: 'column', minWidth: 0 }}>
+      <div className="predict-layout">
+        <section className="predict-main">
           {/* Filters */}
-          <div className="predict-form card" style={{ flexShrink: 0 }}>
+          <div className="predict-form card">
             <div className="predict-form-inputs">
               <input
                 className="input-primary"
@@ -210,17 +221,49 @@ export default function CommunityBets() {
               Loading community predictions...
             </div>
           ) : filteredBets.length > 0 ? (
-            <div style={{ flex: 1, overflowY: 'auto', overflowX: 'hidden', display: 'flex', flexDirection: 'column', gap: '1rem' }} className="hide-scrollbar">
-              {filteredBets.map(bet => (
-                <BetCard
-                  key={bet.id}
-                  bet={bet}
-                  currentUserId={userId}
-                  onLike={handleLike}
-                  onShare={handleShare}
-                />
-              ))}
-            </div>
+            <>
+              <div className="hide-scrollbar" style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                {displayedBets.map(bet => (
+                  <BetCard
+                    key={bet.id}
+                    bet={bet}
+                    currentUserId={userId}
+                    onLike={handleLike}
+                    onShare={handleShare}
+                  />
+                ))}
+              </div>
+              
+              {/* Load More Button */}
+              {visibleCount < filteredBets.length && (
+                <button
+                  onClick={handleLoadMore}
+                  style={{
+                    width: '100%',
+                    padding: '1rem',
+                    marginTop: '1rem',
+                    backgroundColor: 'var(--surface)',
+                    border: '1px solid var(--border)',
+                    borderRadius: 'var(--radius)',
+                    color: 'var(--text)',
+                    fontSize: '0.95rem',
+                    fontWeight: '600',
+                    cursor: 'pointer',
+                    transition: 'all 0.2s',
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.backgroundColor = 'var(--accent)';
+                    e.currentTarget.style.borderColor = 'var(--accent)';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.backgroundColor = 'var(--surface)';
+                    e.currentTarget.style.borderColor = 'var(--border)';
+                  }}
+                >
+                  Load More ({filteredBets.length - visibleCount} remaining)
+                </button>
+              )}
+            </>
           ) : (
             <div style={{ textAlign: 'center', padding: '3rem', color: 'var(--text-secondary)' }}>
               <p style={{ fontSize: '1rem', marginBottom: '1rem' }}>
@@ -235,7 +278,8 @@ export default function CommunityBets() {
           )}
         </section>
 
-        <aside className="predict-sidebar hide-scrollbar" style={{ width: '300px', overflowY: 'auto', maxHeight: 'calc(100vh - 120px)', flexShrink: 0, display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+        {/* Sidebar - Fixed on desktop, stacked on mobile */}
+        <aside className="predict-sidebar hide-scrollbar">
           <div className="card">
             <h3 className="sidebar-title">📊 Community Stats</h3>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', color: 'var(--text-secondary)', fontSize: '0.9rem' }}>

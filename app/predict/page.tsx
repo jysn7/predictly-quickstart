@@ -15,6 +15,8 @@ export default function Predict() {
   const router = useRouter();
   const [allMatches, setAllMatches] = useState<Match[]>([]);
   const [filteredMatches, setFilteredMatches] = useState<Match[]>([]);
+  const [displayedMatches, setDisplayedMatches] = useState<Match[]>([]);
+  const [visibleCount, setVisibleCount] = useState(12);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedSport, setSelectedSport] = useState("All Sports");
   const [sports, setSports] = useState<string[]>([]);
@@ -97,7 +99,17 @@ export default function Predict() {
     const sport = selectedSport === 'All Sports' ? undefined : selectedSport;
     const filtered = searchMatches(allMatches, searchQuery, sport);
     setFilteredMatches(filtered);
+    setVisibleCount(12); // Reset to 12 when filters change
   }, [searchQuery, selectedSport, allMatches]);
+
+  // Update displayed matches based on visible count
+  useEffect(() => {
+    setDisplayedMatches(filteredMatches.slice(0, visibleCount));
+  }, [filteredMatches, visibleCount]);
+
+  const handleLoadMore = () => {
+    setVisibleCount(prev => prev + 12);
+  };
 
   const handlePredict = async () => {
     if (!selectedMatch) return;
@@ -280,11 +292,11 @@ export default function Predict() {
         />
       )}
 
-      <div className="predict-layout" style={{ display: 'flex', height: 'calc(100vh - 120px)', gap: '1.5rem' }}>
+      <div className="predict-layout">
         {/* Main Content - Scrollable */}
-        <section className="predict-main" style={{ flex: 1, display: 'flex', flexDirection: 'column', minWidth: 0 }}>
+        <section className="predict-main">
           {/* Search and Filter Section - Fixed */}
-          <div className="predict-form card" style={{ flexShrink: 0 }}>
+          <div className="predict-form card">
             <div className="predict-form-inputs">
               <input 
                 className="input-primary" 
@@ -306,14 +318,15 @@ export default function Predict() {
           </div>
 
           {/* Matches List - Scrollable */}
-          <div style={{ flex: 1, overflowY: 'auto', overflowX: 'hidden' }} className="hide-scrollbar">
+          <div className="hide-scrollbar">
             {isLoadingMatches ? (
               <div style={{ textAlign: 'center', padding: '2rem', color: 'var(--text-secondary)' }}>
                 Loading matches...
               </div>
             ) : filteredMatches.length > 0 ? (
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                {filteredMatches.map((match) => (
+              <>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                  {displayedMatches.map((match) => (
                   <div 
                     key={match.id}
                     className="card"
@@ -325,8 +338,8 @@ export default function Predict() {
                       padding: '1.5rem',
                     }}
                   >
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'start' }}>
-                      <div style={{ flex: 1 }} onClick={() => setSelectedMatch(match)}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'start', flexWrap: 'wrap', gap: '1rem' }}>
+                      <div style={{ flex: 1, minWidth: '200px' }} onClick={() => setSelectedMatch(match)}>
                         <h3 style={{ fontSize: '1.125rem', fontWeight: '600', color: 'var(--text)', marginBottom: '0.75rem' }}>
                           {match.homeTeam} vs {match.awayTeam}
                         </h3>
@@ -344,7 +357,7 @@ export default function Predict() {
                           </div>
                         </div>
                       </div>
-                      <div style={{ textAlign: 'right', minWidth: '120px', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                      <div style={{ textAlign: 'right', minWidth: '120px', display: 'flex', flexDirection: 'column', gap: '0.5rem', width: '100%', maxWidth: '120px' }} className="predict-card-actions">
                         <div 
                           onClick={() => setSelectedMatch(match)}
                           style={{ 
@@ -400,7 +413,38 @@ export default function Predict() {
                     </div>
                   </div>
                 ))}
-              </div>
+                </div>
+                
+                {/* Load More Button */}
+                {visibleCount < filteredMatches.length && (
+                  <button
+                    onClick={handleLoadMore}
+                    style={{
+                      width: '100%',
+                      padding: '1rem',
+                      marginTop: '1rem',
+                      backgroundColor: 'var(--surface)',
+                      border: '1px solid var(--border)',
+                      borderRadius: 'var(--radius)',
+                      color: 'var(--text)',
+                      fontSize: '0.95rem',
+                      fontWeight: '600',
+                      cursor: 'pointer',
+                      transition: 'all 0.2s',
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.backgroundColor = 'var(--accent)';
+                      e.currentTarget.style.borderColor = 'var(--accent)';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.backgroundColor = 'var(--surface)';
+                      e.currentTarget.style.borderColor = 'var(--border)';
+                    }}
+                  >
+                    Load More ({filteredMatches.length - visibleCount} remaining)
+                  </button>
+                )}
+              </>
             ) : (
               <div style={{ textAlign: 'center', padding: '2rem', color: 'var(--text-secondary)' }}>
                 No matches found. Try adjusting your search.
@@ -409,8 +453,8 @@ export default function Predict() {
           </div>
         </section>
 
-        {/* Sidebar - Fixed */}
-        <aside className="predict-sidebar hide-scrollbar" style={{ width: '300px', overflowY: 'auto', maxHeight: 'calc(100vh - 120px)' }}>
+        {/* Sidebar - Fixed on desktop, stacked on mobile */}
+        <aside className="predict-sidebar hide-scrollbar">
           <div className="card">
             <h3 className="sidebar-title">Generate Prediction</h3>
             {selectedMatch ? (

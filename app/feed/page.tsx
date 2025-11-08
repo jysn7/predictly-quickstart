@@ -8,6 +8,7 @@ export default function Feed() {
   const [selectedSport, setSelectedSport] = useState("All Sports");
   const [sports, setSports] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [visibleCount, setVisibleCount] = useState(12);
 
   useEffect(() => {
     const loadMatches = async () => {
@@ -29,6 +30,12 @@ export default function Feed() {
     ? matches 
     : matches.filter(m => m.sport === selectedSport);
 
+  const displayedMatches = filteredMatches.slice(0, visibleCount);
+
+  const handleLoadMore = () => {
+    setVisibleCount(prev => prev + 12);
+  };
+
   const feedItems = filteredMatches.map(match => ({
     user: match.league,
     match: `${match.homeTeam} vs ${match.awayTeam}`,
@@ -48,23 +55,55 @@ export default function Feed() {
         </select>
       </div>
 
-      <div className="feed-layout" style={{ display: 'flex', height: 'calc(100vh - 140px)', gap: '1.5rem' }}>
+      <div className="feed-layout">
         {/* Main Feed - Scrollable */}
-        <div className="feed-main hide-scrollbar" style={{ flex: 1, overflowY: 'auto', overflowX: 'hidden', minWidth: 0 }}>
+        <div className="feed-main hide-scrollbar">
           {isLoading ? (
             <div style={{ textAlign: 'center', padding: '2rem', color: 'var(--text-secondary)' }}>
               Loading matches...
             </div>
           ) : filteredMatches.length > 0 ? (
-            filteredMatches.map((match) => (
-              <FeedItem
-                key={match.id}
-                user={match.league}
-                match={`${match.homeTeam} vs ${match.awayTeam}`}
-                winner={match.homeTeam}
-                confidence={Math.floor(Math.random() * 30) + 60}
-              />
-            ))
+            <>
+              {displayedMatches.map((match) => (
+                <FeedItem
+                  key={match.id}
+                  user={match.league}
+                  match={`${match.homeTeam} vs ${match.awayTeam}`}
+                  winner={match.homeTeam}
+                  confidence={Math.floor(Math.random() * 30) + 60}
+                />
+              ))}
+              
+              {/* Load More Button */}
+              {visibleCount < filteredMatches.length && (
+                <button
+                  onClick={handleLoadMore}
+                  style={{
+                    width: '100%',
+                    padding: '1rem',
+                    marginTop: '1rem',
+                    backgroundColor: 'var(--surface)',
+                    border: '1px solid var(--border)',
+                    borderRadius: 'var(--radius)',
+                    color: 'var(--text)',
+                    fontSize: '0.95rem',
+                    fontWeight: '600',
+                    cursor: 'pointer',
+                    transition: 'all 0.2s',
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.backgroundColor = 'var(--accent)';
+                    e.currentTarget.style.borderColor = 'var(--accent)';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.backgroundColor = 'var(--surface)';
+                    e.currentTarget.style.borderColor = 'var(--border)';
+                  }}
+                >
+                  Load More ({filteredMatches.length - visibleCount} remaining)
+                </button>
+              )}
+            </>
           ) : (
             <div style={{ textAlign: 'center', padding: '2rem', color: 'var(--text-secondary)' }}>
               No matches found
@@ -72,8 +111,8 @@ export default function Feed() {
           )}
         </div>
 
-        {/* Sidebar - Fixed */}
-        <aside className="feed-sidebar hide-scrollbar" style={{ width: '300px', overflowY: 'auto', maxHeight: 'calc(100vh - 140px)', flexShrink: 0, display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+        {/* Sidebar - Fixed on desktop, stacked on mobile */}
+        <aside className="feed-sidebar hide-scrollbar">
           <div className="sidebar-card">
             <h3 className="sidebar-title">Trending Matches</h3>
             <ul className="sidebar-list">

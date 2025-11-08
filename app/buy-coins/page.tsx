@@ -53,8 +53,8 @@ export default function BuyCoins() {
       <div
         style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-          gap: '1.5rem',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
+          gap: '1rem',
           maxWidth: '1200px',
         }}
       >
@@ -63,7 +63,7 @@ export default function BuyCoins() {
             key={pkg.usdAmount}
             onClick={() => handleSelectPackage(pkg.usdAmount)}
             style={{
-              padding: '2rem',
+              padding: '1.5rem',
               background: 'var(--surface)',
               border: '1px solid var(--border)',
               borderRadius: '12px',
@@ -107,33 +107,33 @@ export default function BuyCoins() {
 
             {/* Coin Amount */}
             <div>
-              <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '0.5px', margin: '0 0 0.5rem 0' }}>
+              <p style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '0.5px', margin: '0 0 0.5rem 0' }}>
                 Coin Package
               </p>
-              <h2 style={{ fontSize: '2rem', fontWeight: '700', color: 'var(--accent)', margin: 0 }}>
+              <h2 style={{ fontSize: '1.75rem', fontWeight: '700', color: 'var(--accent)', margin: 0 }}>
                 {pkg.coinAmount}
               </h2>
-              <p style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', margin: '0.25rem 0 0 0' }}>
+              <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', margin: '0.25rem 0 0 0' }}>
                 PDC Coins
               </p>
             </div>
 
             {/* Price */}
-            <div style={{ paddingTop: '1rem', borderTop: '1px solid var(--border)' }}>
-              <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', margin: '0 0 0.5rem 0' }}>
+            <div style={{ paddingTop: '0.75rem', borderTop: '1px solid var(--border)' }}>
+              <p style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', margin: '0 0 0.5rem 0' }}>
                 Price
               </p>
-              <p style={{ fontSize: '1.5rem', fontWeight: '700', color: 'var(--text)', margin: 0 }}>
+              <p style={{ fontSize: '1.25rem', fontWeight: '700', color: 'var(--text)', margin: 0 }}>
                 {formatUSDC(pkg.usdAmount)}
               </p>
             </div>
 
             {/* Value Info */}
-            <div style={{ paddingTop: '1rem', borderTop: '1px solid var(--border)' }}>
-              <p style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '0.5px', margin: '0 0 0.5rem 0' }}>
+            <div style={{ paddingTop: '0.75rem', borderTop: '1px solid var(--border)' }}>
+              <p style={{ fontSize: '0.7rem', color: 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '0.5px', margin: '0 0 0.5rem 0' }}>
                 Value
               </p>
-              <p style={{ fontSize: '0.9rem', color: 'var(--accent)', margin: 0, fontWeight: '600' }}>
+              <p style={{ fontSize: '0.85rem', color: 'var(--accent)', margin: 0, fontWeight: '600' }}>
                 ${(parseFloat(pkg.usdAmount) / parseInt(pkg.coinAmount) * 100).toFixed(1)} per 100 coins
               </p>
             </div>
@@ -141,15 +141,15 @@ export default function BuyCoins() {
             {/* Button */}
             <button
               style={{
-                marginTop: '1rem',
-                padding: '0.75rem 1.5rem',
+                marginTop: '0.75rem',
+                padding: '0.65rem 1.25rem',
                 background: pkg.popular ? 'var(--accent)' : 'transparent',
                 border: pkg.popular ? 'none' : '1px solid var(--accent)',
                 borderRadius: '6px',
                 color: 'white',
                 fontWeight: '600',
                 cursor: 'pointer',
-                fontSize: '0.9rem',
+                fontSize: '0.85rem',
                 transition: 'all 0.2s',
                 backgroundColor: pkg.popular ? 'var(--accent)' : 'transparent',
               }}
