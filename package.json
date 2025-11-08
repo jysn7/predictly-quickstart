@@ -11,6 +11,8 @@
   "dependencies": {
     "@base-org/account": "^2.4.2",
     "@base-org/account-ui": "^1.0.1",
+    "@coinbase/onchainkit": "^0.35.15",
+    "@farcaster/quick-auth": "^1.0.0",
     "lucide-react": "^0.553.0",
     "next": "15.3.4",
     "openai": "^4.7.0",

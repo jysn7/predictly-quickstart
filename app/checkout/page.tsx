@@ -1,13 +1,13 @@
 'use client';
 
 import { useRouter, useSearchParams } from 'next/navigation';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { Loader2, ChevronLeft } from 'lucide-react';
 import { BasePayButton } from '@base-org/account-ui/react';
 import { initializeBasePay, pollPaymentCompletion, getCoinPackages, formatUSDC } from '@/app/utils/basePay';
 import { getBalance } from '@/app/utils/coinSystem';
 
-export default function Checkout() {
+function CheckoutContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   
@@ -346,5 +346,20 @@ export default function Checkout() {
         }
       `}</style>
     </main>
+  );
+}
+
+export default function Checkout() {
+  return (
+    <Suspense fallback={
+      <main className="page-container">
+        <div style={{ textAlign: 'center', padding: '3rem' }}>
+          <Loader2 size={32} style={{ animation: 'spin 1s linear infinite', color: 'var(--accent)' }} />
+          <p style={{ color: 'var(--text-secondary)', marginTop: '1rem' }}>Loading...</p>
+        </div>
+      </main>
+    }>
+      <CheckoutContent />
+    </Suspense>
   );
 }

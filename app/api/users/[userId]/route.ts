@@ -4,17 +4,22 @@ import { NextRequest, NextResponse } from "next/server";
 const mockUsers: any = {};
 const mockPredictions: any = {};
 
-export async function GET(request: NextRequest, { params }: { params: { userId: string } }) {
+export async function GET(
+  request: NextRequest,
+  context: { params: Promise<{ userId: string }> }
+) {
   try {
-    const userProfile = mockUsers[params.userId] || {
-      id: params.userId,
-      displayName: 'User ' + params.userId,
+    const { userId } = await context.params;
+    
+    const userProfile = mockUsers[userId] || {
+      id: userId,
+      displayName: 'User ' + userId,
       bio: 'Prediction enthusiast',
       avatarUrl: null,
       joinedAt: new Date()
     };
 
-    const userPredictions = mockPredictions[params.userId] || [];
+    const userPredictions = mockPredictions[userId] || [];
 
     const userStats = {
       totalPredictions: userPredictions.length,
@@ -32,20 +37,24 @@ export async function GET(request: NextRequest, { params }: { params: { userId: 
   }
 }
 
-export async function PUT(request: NextRequest, { params }: { params: { userId: string } }) {
+export async function PUT(
+  request: NextRequest,
+  context: { params: Promise<{ userId: string }> }
+) {
   try {
+    const { userId } = await context.params;
     const body = await request.json();
     const { displayName, bio, avatarUrl } = body;
 
     const updatedProfile = {
-      id: params.userId,
+      id: userId,
       displayName,
       bio,
       avatarUrl,
       updatedAt: new Date()
     };
 
-    mockUsers[params.userId] = updatedProfile;
+    mockUsers[userId] = updatedProfile;
 
     return NextResponse.json(updatedProfile);
   } catch (error: any) {

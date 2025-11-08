@@ -1,7 +1,7 @@
-import { Errors, createClient } from "@farcaster/quick-auth";
+// import { Errors, createClient } from "@farcaster/quick-auth";
 import { NextRequest, NextResponse } from "next/server";
 
-const client = createClient();
+// const client = createClient();
 
 // Helper function to determine the correct domain for JWT verification
 function getUrlHost(request: NextRequest): string {
@@ -47,33 +47,38 @@ export async function GET(request: NextRequest) {
   }
 
   try {
+    // Farcaster auth disabled
+    return NextResponse.json({
+      message: "Farcaster authentication is disabled. Use Base Account instead.",
+    }, { status: 501 });
+
     // Now we verify the token. `domain` must match the domain of the request.
     // In our case, we're using the `getUrlHost` function to get the domain of the request
     // based on the Vercel environment. This will vary depending on your hosting provider.
-    const payload = await client.verifyJwt({
-      token: authorization.split(" ")[1] as string,
-      domain: getUrlHost(request),
-    });
+    // const payload = await client.verifyJwt({
+    //   token: authorization.split(" ")[1] as string,
+    //   domain: getUrlHost(request),
+    // });
 
-    console.log("payload", payload);
+    // console.log("payload", payload);
 
     // If the token was valid, `payload.sub` will be the user's Farcaster ID.
-    const userFid = payload.sub;
+    // const userFid = payload.sub;
 
     // Return user information for your waitlist application
-    return NextResponse.json({
-      success: true,
-      user: {
-        fid: userFid,
-        issuedAt: payload.iat,
-        expiresAt: payload.exp,
-      },
-    });
+    // return NextResponse.json({
+    //   success: true,
+    //   user: {
+    //     fid: userFid,
+    //     issuedAt: payload.iat,
+    //     expiresAt: payload.exp,
+    //   },
+    // });
 
   } catch (e) {
-    if (e instanceof Errors.InvalidTokenError) {
-      return NextResponse.json({ message: "Invalid token" }, { status: 401 });
-    }
+    // if (e instanceof Errors.InvalidTokenError) {
+    //   return NextResponse.json({ message: "Invalid token" }, { status: 401 });
+    // }
     if (e instanceof Error) {
       return NextResponse.json({ message: e.message }, { status: 500 });
     }

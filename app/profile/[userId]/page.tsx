@@ -1,7 +1,9 @@
 "use client";
 
-export default function Profile({ params }: any) {
-  const userId = params.userId;
+import { use } from "react";
+
+export default function Profile({ params }: { params: Promise<{ userId: string }> }) {
+  const { userId } = use(params);
 
   const mockRecent = [
     { match: 'Team A vs Team B', result: 'Win', confidence: 78 },

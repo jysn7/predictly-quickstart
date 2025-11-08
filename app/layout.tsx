@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Source_Code_Pro } from "next/font/google";
+// import { Inter, Source_Code_Pro } from "next/font/google";
 import { RootProvider } from "./rootProvider";
 import { ErrorBoundary } from "./components/ErrorBoundary";
 import BaseScriptLoader from "./components/BaseScriptLoader";
@@ -37,17 +37,18 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
-const inter = Inter({
-  variable: "--font-inter",
-  subsets: ["latin"],
-  display: "swap",
-});
+// Commented out Google Fonts due to network issues - using system fonts instead
+// const inter = Inter({
+//   variable: "--font-inter",
+//   subsets: ["latin"],
+//   display: "swap",
+// });
 
-const sourceCodePro = Source_Code_Pro({
-  variable: "--font-source-code-pro",
-  subsets: ["latin"],
-  display: "swap",
-});
+// const sourceCodePro = Source_Code_Pro({
+//   variable: "--font-source-code-pro",
+//   subsets: ["latin"],
+//   display: "swap",
+// });
 
 export default function RootLayout({
   children,
@@ -59,7 +60,7 @@ export default function RootLayout({
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </head>
-      <body className={`${inter.variable} ${sourceCodePro.variable}`}>
+      <body className="font-sans">
         <ErrorBoundary>
           <RootProvider>
             <BaseScriptLoader />

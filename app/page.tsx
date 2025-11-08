@@ -129,7 +129,7 @@ export default function Home() {
             <div className="feature-card">
               <div className="feature-header">
                 <div className="feature-icon">
-                  <span>🎯</span>
+                  <span></span>
                 </div>
                 <h3>AI-Powered Predictions</h3>
               </div>
@@ -139,7 +139,7 @@ export default function Home() {
             <div className="feature-card">
               <div className="feature-header">
                 <div className="feature-icon">
-                  <span>🏆</span>
+                  <span></span>
                 </div>
                 <h3>Global Leaderboards</h3>
               </div>
@@ -149,7 +149,7 @@ export default function Home() {
             <div className="feature-card">
               <div className="feature-header">
                 <div className="feature-icon">
-                  <span>📊</span>
+                  <span></span>
                 </div>
                 <h3>Real-time Analytics</h3>
               </div>
