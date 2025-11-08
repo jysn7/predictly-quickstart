@@ -17,10 +17,9 @@ A decentralized predictions platform built on BASE. Users can make predictions a
 
 Before getting started, make sure you have:
 
-* Base app account
+* A [Base Account](https://docs.base.org/base-account)
 * A [Farcaster](https://farcaster.xyz/) account
 * [Vercel](https://vercel.com/) account for hosting the application
-* [Coinbase Developer Platform](https://portal.cdp.coinbase.com/) Client API Key
 
 ## Getting Started
 

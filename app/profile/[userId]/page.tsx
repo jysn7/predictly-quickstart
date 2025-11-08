@@ -10,69 +10,69 @@ export default function Profile({ params }: any) {
 
   return (
     <main className="page-container">
-      <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-8 gap-6">
+      <div className="page-header" style={{ marginBottom: '2rem' }}>
         <div>
-          <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-purpleNeon to-white bg-clip-text text-transparent">{userId}</h1>
-          <div className="text-white/70">@{userId.toLowerCase()} • Predictor</div>
+          <h1 className="page-title">{userId}</h1>
+          <div style={{ color: 'var(--text-secondary)', marginTop: '0.5rem' }}>@{userId.toLowerCase()} • Predictor</div>
         </div>
 
-        <div className="flex items-center gap-4">
-          <button className="px-6 py-3 bg-gradient-to-r from-purpleNeon to-[#B066FF] text-white font-bold rounded-xl whitespace-nowrap hover:opacity-90 transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-purpleNeon/50">Follow</button>
-          <div className="text-white/70">Followers <strong className="text-white">98</strong></div>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem' }}>
+          <button className="btn-primary">Follow</button>
+          <div style={{ color: 'var(--text-secondary)' }}>Followers <strong style={{ color: 'var(--text)' }}>98</strong></div>
         </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <section className="lg:col-span-2 flex flex-col gap-4">
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '1.5rem' }} className="profile-grid">
+        <section style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
           <div className="card">
-            <h3 className="text-lg font-bold mb-3">Stats</h3>
-            <div className="stats-grid">
-              <div className="stat-card">
-                <div className="stat-value">42</div>
-                <div className="stat-label">Predictions</div>
+            <h3 style={{ fontSize: '1.125rem', fontWeight: '600', marginBottom: '1.5rem' }}>Stats</h3>
+            <div className="grid-responsive">
+              <div className="card" style={{ backgroundColor: 'var(--bg)' }}>
+                <div style={{ fontSize: '1.75rem', fontWeight: '700', color: 'var(--text)', marginBottom: '0.5rem' }}>42</div>
+                <div style={{ color: 'var(--text-secondary)', fontSize: '0.875rem' }}>Predictions</div>
               </div>
-              <div className="stat-card">
-                <div className="stat-value">78%</div>
-                <div className="stat-label">Accuracy</div>
+              <div className="card" style={{ backgroundColor: 'var(--bg)' }}>
+                <div style={{ fontSize: '1.75rem', fontWeight: '700', color: 'var(--text)', marginBottom: '0.5rem' }}>78%</div>
+                <div style={{ color: 'var(--text-secondary)', fontSize: '0.875rem' }}>Accuracy</div>
               </div>
-              <div className="stat-card">
-                <div className="stat-value">7</div>
-                <div className="stat-label">Win Streak</div>
+              <div className="card" style={{ backgroundColor: 'var(--bg)' }}>
+                <div style={{ fontSize: '1.75rem', fontWeight: '700', color: 'var(--text)', marginBottom: '0.5rem' }}>7</div>
+                <div style={{ color: 'var(--text-secondary)', fontSize: '0.875rem' }}>Win Streak</div>
               </div>
-              <div className="stat-card">
-                <div className="stat-value">Diamond</div>
-                <div className="stat-label">Tier</div>
+              <div className="card" style={{ backgroundColor: 'var(--bg)' }}>
+                <div style={{ fontSize: '1.75rem', fontWeight: '700', color: 'var(--text)', marginBottom: '0.5rem' }}>Diamond</div>
+                <div style={{ color: 'var(--text-secondary)', fontSize: '0.875rem' }}>Tier</div>
               </div>
             </div>
           </div>
 
           <div className="card">
-            <h3 className="text-lg font-bold mb-3">Recent Predictions</h3>
-            <div className="flex flex-col gap-3">
+            <h3 style={{ fontSize: '1.125rem', fontWeight: '600', marginBottom: '1.5rem' }}>Recent Predictions</h3>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
               {mockRecent.map((r, i) => (
-                <div key={i} className="prediction-item">
+                <div key={i} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingBottom: '1rem', borderBottom: '1px solid var(--border)' }}>
                   <div>
-                    <div className="text-white/90">{r.match}</div>
-                    <div className="text-white/70 text-sm">{r.confidence}% • {r.result}</div>
+                    <div style={{ color: 'var(--text)' }}>{r.match}</div>
+                    <div style={{ color: 'var(--text-secondary)', fontSize: '0.875rem', marginTop: '0.25rem' }}>{r.confidence}% • {r.result}</div>
                   </div>
-                  <div className={`font-bold ${r.result === 'Win' ? 'text-green-400' : 'text-red-400'}`}>{r.result}</div>
+                  <div style={{ fontWeight: '600', color: r.result === 'Win' ? '#22c55e' : '#ef4444' }}>{r.result}</div>
                 </div>
               ))}
             </div>
           </div>
         </section>
 
-        <aside className="flex flex-col gap-4">
-          <div className="p-6 rounded-2xl bg-purpleDark/20 border border-purpleNeon/10">
-            <h3 className="text-lg font-bold mb-3">About</h3>
-            <p className="text-white/70 text-sm">Early adopter and competitive predictor. Loves sports analytics and building ML models.</p>
+        <aside style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+          <div className="card">
+            <h3 style={{ fontSize: '1.125rem', fontWeight: '600', marginBottom: '1rem' }}>About</h3>
+            <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', lineHeight: '1.6' }}>Early adopter and competitive predictor. Loves sports analytics and building ML models.</p>
           </div>
 
-          <div className="p-6 rounded-2xl bg-purpleDark/20 border border-purpleNeon/10">
-            <h3 className="text-lg font-bold mb-3">Mutuals</h3>
-            <ul className="text-white/70 text-sm list-disc pl-5">
-              <li>Alice</li>
-              <li>Bob</li>
+          <div className="card">
+            <h3 style={{ fontSize: '1.125rem', fontWeight: '600', marginBottom: '1rem' }}>Mutuals</h3>
+            <ul style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', listStyle: 'none' }}>
+              <li style={{ marginBottom: '0.5rem' }}>Alice</li>
+              <li style={{ marginBottom: '0.5rem' }}>Bob</li>
             </ul>
           </div>
         </aside>

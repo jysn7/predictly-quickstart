@@ -1,13 +1,7 @@
-import { getFrameHtmlResponse, getFrameMessage } from '@coinbase/onchainkit';
-import { baseConfig, isValidConfig } from '../config/base';
+// Base utilities for the application
 
 export const handleBaseError = (error: any) => {
   console.error('BASE API Error:', error);
-  
-  if (error.response?.data?.message) {
-    return new Error(error.response.data.message);
-  }
-  
   return new Error('An unexpected error occurred');
 };
 
@@ -40,4 +34,44 @@ export const formatUser = (user: any) => {
     createdAt: new Date(user.createdAt),
     updatedAt: new Date(user.updatedAt),
   };
+};
+
+export const isValidConfig = () => {
+  return typeof window !== 'undefined' && !!(window as any).baseProvider;
+};
+
+export const getBaseAccountAddress = async () => {
+  const provider = (window as any).baseProvider;
+  if (!provider) {
+    throw new Error('Base Account not available');
+  }
+  
+  try {
+    const accounts = await provider.request({
+      method: "eth_accounts",
+      params: [],
+    });
+    return accounts.length > 0 ? accounts[0] : null;
+  } catch (error) {
+    console.error('Failed to get Base Account address:', error);
+    return null;
+  }
+};
+
+export const isConnectedToBase = async () => {
+  const provider = (window as any).baseProvider;
+  if (!provider) {
+    return false;
+  }
+  
+  try {
+    const accounts = await provider.request({
+      method: "eth_accounts",
+      params: [],
+    });
+    return accounts && accounts.length > 0;
+  } catch (error) {
+    console.error('Failed to check Base Account connection:', error);
+    return false;
+  }
 };

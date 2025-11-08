@@ -1,57 +1,32 @@
 "use client";
 
-import { useComposeCast } from '@coinbase/onchainkit/minikit';
-import { minikitConfig } from "../../minikit.config";
-import styles from "./page.module.css";
+import { useRouter } from "next/navigation";
 
 export default function Success() {
-
-  const { composeCastAsync } = useComposeCast();
+  const router = useRouter();
   
-  const handleShare = async () => {
-    try {
-      const text = `Yay! I just joined the waitlist for ${minikitConfig.miniapp.name.toUpperCase()}! `;
-      
-      const result = await composeCastAsync({
-        text: text,
-        embeds: [process.env.NEXT_PUBLIC_URL || ""]
-      });
-
-      // result.cast can be null if user cancels
-      if (result?.cast) {
-        console.log("Cast created successfully:", result.cast.hash);
-      } else {
-        console.log("User cancelled the cast");
-      }
-    } catch (error) {
-      console.error("Error sharing cast:", error);
-    }
+  const handleContinue = () => {
+    router.push('/dashboard');
   };
 
   return (
-    <div className={styles.container}>
-      <button className={styles.closeButton} type="button">
+    <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '2rem' }}>
+      <button onClick={() => router.push('/')} style={{ position: 'absolute', top: '1.5rem', right: '1.5rem', background: 'none', border: 'none', color: 'var(--text)', fontSize: '1.5rem', cursor: 'pointer' }}>
         ✕
       </button>
       
-      <div className={styles.content}>
-        <div className={styles.successMessage}>
-          <div className={styles.checkmark}>
-            <div className={styles.checkmarkCircle}>
-              <div className={styles.checkmarkStem}></div>
-              <div className={styles.checkmarkKick}></div>
-            </div>
-          </div>
+      <div style={{ textAlign: 'center', maxWidth: '500px' }}>
+        <div style={{ marginBottom: '2rem' }}>
+          <div style={{ fontSize: '4rem', marginBottom: '1rem' }}>✓</div>
           
-          <h1 className={styles.title}>Welcome to the {minikitConfig.miniapp.name.toUpperCase()}!</h1>
+          <h1 style={{ fontSize: '2.5rem', fontWeight: '700', color: 'var(--text)', marginBottom: '1rem' }}>Welcome to Predictly!</h1>
           
-          <p className={styles.subtitle}>
-            You&apos;re in! We&apos;ll notify you as soon as we launch.<br />
-            Get ready to experience the future of onchain marketing.
+          <p style={{ color: 'var(--text-secondary)', fontSize: '1.1rem', lineHeight: '1.6', marginBottom: '2rem' }}>
+            You&apos;ve successfully joined. Get ready to start making predictions and earning rewards.
           </p>
 
-          <button onClick={handleShare} className={styles.shareButton}>
-            SHARE
+          <button onClick={handleContinue} className="btn-primary" style={{ width: '100%' }}>
+            Continue to Dashboard
           </button>
         </div>
       </div>

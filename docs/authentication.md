@@ -28,34 +28,33 @@ sequenceDiagram
 
 ### Client-side Setup
 
-```typescript
-// app/rootProvider.tsx
-import { OnchainKitProvider } from "@coinbase/onchainkit";
-import { base } from "wagmi/chains";
+Base Account is integrated using the official Base Account CDN script. Add the script to your layout:
 
-export function RootProvider({ children }) {
+```typescript
+// app/layout.tsx
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
-    <OnchainKitProvider
-      apiKey={process.env.NEXT_PUBLIC_ONCHAINKIT_API_KEY}
-      chain={base}
-      config={{
-        appearance: { mode: "auto" },
-        wallet: {
-          display: "modal",
-          preference: "baseAccount",
-        },
-      }}
-      baseAccount={{
-        enabled: true,
-        clientId: process.env.NEXT_PUBLIC_BASE_ACCOUNT_CLIENT_ID,
-        callbackURL: process.env.NEXT_PUBLIC_BASE_ACCOUNT_CALLBACK_URL,
-      }}
-    >
-      {children}
-    </OnchainKitProvider>
+    <html lang="en">
+      <head>
+        <script src="https://cdn.base.org/base-account/latest.js"></script>
+      </head>
+      <body>
+        {children}
+      </body>
+    </html>
   );
 }
 ```
+
+The Base Account SDK is available globally through `window.BaseAccount` and provides the following methods:
+- `connect()`: Opens the Base Account modal for connection
+- `disconnect()`: Disconnects the current account
+- `getAccounts()`: Returns array of connected accounts
+- `isConnected()`: Checks current connection status
 
 ### Server-side Verification
 
@@ -148,14 +147,7 @@ export function ProtectedComponent() {
 
 ## Environment Variables
 
-Required environment variables for authentication:
-
-```bash
-# Required for Base Account integration
-NEXT_PUBLIC_ONCHAINKIT_API_KEY=your_api_key_here
-NEXT_PUBLIC_BASE_ACCOUNT_CLIENT_ID=your_client_id_here
-NEXT_PUBLIC_BASE_ACCOUNT_CALLBACK_URL=http://localhost:3000/api/auth/callback
-```
+No environment variables are required for Base Account integration as we're using the CDN approach. The Base Account SDK is loaded directly from the CDN and handles authentication internally.
 
 ## Security Considerations
 

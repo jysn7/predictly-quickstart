@@ -12,21 +12,19 @@ Predictly uses BASE as its primary data store in production mode. The integratio
 
 ## Setting Up BASE Integration
 
-### 1. Get BASE Credentials
+### 1. Set Up Base Account
 
-1. Create a BASE account at https://base.app
-2. Create a new project
-3. Generate an API key with appropriate permissions
-4. Note your project ID
+1. No account creation needed - Base Account is available via CDN
+2. Add the Base Account script to your layout:
 
-### 2. Configure Environment
+```typescript
+// app/layout.tsx
+<script src="https://cdn.base.org/base-account/latest.js"></script>
+```
 
-Add these variables to `.env.local`:
+### 2. Environment Setup
 
-```bash
-BASE_API_KEY=your_api_key_here
-BASE_PROJECT_ID=your_project_id_here
-BASE_API_URL=https://api.base.app
+No environment variables are required for Base Account integration. The SDK is loaded directly from the CDN.
 ```
 
 For production, add these to your Vercel environment variables.

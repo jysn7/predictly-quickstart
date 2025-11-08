@@ -1,7 +1,7 @@
 // Simple helper to return mock AI responses when running a static demo.
 // When NEXT_PUBLIC_USE_STATIC_DEMO === 'true' this returns deterministic mock data.
 // Otherwise it proxies to the real /api/ai endpoint.
-export type AiRequest = { prompt: string; max_tokens?: number };
+export type AiRequest = { prompt: string; max_tokens?: number; teamStats?: any };
 
 export async function callAiOrMock(req: AiRequest) {
   try {

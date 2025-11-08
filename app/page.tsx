@@ -1,41 +1,17 @@
 "use client";
 import { useState, useEffect } from "react";
-import { useQuickAuth,useMiniKit } from "@coinbase/onchainkit/minikit";
 import { useRouter } from "next/navigation";
-import { minikitConfig } from "../minikit.config";
-
-interface AuthResponse {
-  success: boolean;
-  user?: {
-    fid: number; // FID is the unique identifier for the user
-    issuedAt?: number;
-    expiresAt?: number;
-  };
-  message?: string; // Error messages come as 'message' not 'error'
-}
-
+import { useAuth } from "./rootProvider";
 
 export default function Home() {
-  const { isFrameReady, setFrameReady, context } = useMiniKit();
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const router = useRouter();
+  const { address, isConnected, connect } = useAuth();
 
-  // Initialize the miniapp
   useEffect(() => {
-    if (!isFrameReady) {
-      setFrameReady();
-    }
-  }, [setFrameReady, isFrameReady]);
-
-  const { data: authData, isLoading: isAuthLoading, error: authError } = useQuickAuth<AuthResponse>(
-    "/api/auth",
-    { method: "GET" }
-  );
-
-  // Animation for stats
-  useEffect(() => {
+    // Animation for stats
     const stats = document.querySelectorAll('.stat-number');
     stats.forEach(stat => {
       stat.classList.add('glow-effect');
@@ -47,19 +23,19 @@ export default function Home() {
     return emailRegex.test(email);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
 
-    // Check authentication first
-    if (isAuthLoading) {
-      setError("Please wait while we verify your identity...");
-      return;
-    }
-
-    if (authError || !authData?.success) {
-      setError("Please authenticate to join the waitlist");
-      return;
+    // Check if Base Account is connected
+    if (!isConnected) {
+      try {
+        await connect();
+      } catch (error) {
+        setError("Failed to connect Base Account. Please try again.");
+        console.error("Connection error:", error);
+        return;
+      }
     }
 
     if (!email) {
@@ -72,12 +48,18 @@ export default function Home() {
       return;
     }
 
-    // TODO: Save email to database/API with user FID
-    console.log("Valid email submitted:", email);
-    console.log("User authenticated:", authData.user);
-    
-    // Navigate to success page
-    router.push("/success");
+    try {
+      setIsSubmitting(true);
+      console.log("Valid email submitted:", email);
+      console.log("Base Account:", address);
+      
+      // Navigate to dashboard or success
+      router.push("/dashboard");
+    } catch (error) {
+      setError("Failed to join waitlist");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -96,7 +78,9 @@ export default function Home() {
           </h1>
 
           <p className="hero-subtitle">
-            Hey {context?.user?.displayName || "there"}, get ready to revolutionize your prediction game with AI-powered insights
+            {isConnected ? 
+              `Hey ${address?.slice(0,6)}...${address?.slice(-4)}` : 
+              "Hey there"}, get ready to revolutionize your prediction game with AI-powered insights
           </p>
 
           <div className="stats-grid">

@@ -23,37 +23,37 @@ export default function LeaderboardRow({
   tier
 }: LeaderboardRowProps) {
   return (
-    <div className="p-6 rounded-2xl bg-purpleDark/20 border border-purpleNeon/10 hover:bg-purpleDark/30 transition-all">
+    <div className="card p-6">
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-4">
-          <div className="text-2xl font-bold text-purpleNeon">#{rank}</div>
+          <div className="text-2xl font-bold text-accent">#{rank}</div>
           <div>
-            <h3 className="text-xl font-bold text-white">{username}</h3>
-            <span className="text-purpleNeon/80 text-sm">{tier} Predictor</span>
+            <h3 className="text-xl font-bold text-text">{username}</h3>
+            <span style={{ color: 'var(--text-secondary)' }} className="text-sm">{tier} Predictor</span>
           </div>
         </div>
         <div className="text-right">
-          <div className="text-2xl font-bold text-white">{score}</div>
-          <div className="text-purpleNeon/80 text-sm">points</div>
+          <div className="text-2xl font-bold text-text">{score}</div>
+          <div style={{ color: 'var(--text-secondary)' }} className="text-sm">points</div>
         </div>
       </div>
 
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <div className="p-3 rounded-lg bg-purpleDark/10">
-          <div className="text-purpleNeon/80 text-sm">Accuracy</div>
-          <div className="text-white font-bold">{accuracy}%</div>
+        <div style={{ backgroundColor: 'var(--surface)', padding: '0.75rem', borderRadius: 'var(--radius)' }}>
+          <div style={{ color: 'var(--text-secondary)' }} className="text-sm">Accuracy</div>
+          <div className="text-text font-bold">{accuracy}%</div>
         </div>
-        <div className="p-3 rounded-lg bg-purpleDark/10">
-          <div className="text-purpleNeon/80 text-sm">Predictions</div>
-          <div className="text-white font-bold">{totalPredictions}</div>
+        <div style={{ backgroundColor: 'var(--surface)', padding: '0.75rem', borderRadius: 'var(--radius)' }}>
+          <div style={{ color: 'var(--text-secondary)' }} className="text-sm">Predictions</div>
+          <div className="text-text font-bold">{totalPredictions}</div>
         </div>
-        <div className="p-3 rounded-lg bg-purpleDark/10">
-          <div className="text-purpleNeon/80 text-sm">Win Streak</div>
-          <div className="text-white font-bold">🔥 {winStreak}</div>
+        <div style={{ backgroundColor: 'var(--surface)', padding: '0.75rem', borderRadius: 'var(--radius)' }}>
+          <div style={{ color: 'var(--text-secondary)' }} className="text-sm">Win Streak</div>
+          <div className="text-text font-bold">🔥 {winStreak}</div>
         </div>
-        <div className="p-3 rounded-lg bg-purpleDark/10">
-          <div className="text-purpleNeon/80 text-sm">Last Prediction</div>
-          <div className={`font-bold ${lastPrediction.result === 'win' ? 'text-green-400' : 'text-red-400'}`}>{lastPrediction.result.toUpperCase()}</div>
+        <div style={{ backgroundColor: 'var(--surface)', padding: '0.75rem', borderRadius: 'var(--radius)' }}>
+          <div style={{ color: 'var(--text-secondary)' }} className="text-sm">Last Prediction</div>
+          <div style={{ color: lastPrediction.result === 'win' ? '#22c55e' : '#ef4444' }} className="font-bold">{lastPrediction.result.toUpperCase()}</div>
         </div>
       </div>
     </div>

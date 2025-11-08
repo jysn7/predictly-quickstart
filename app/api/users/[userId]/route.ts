@@ -1,18 +1,26 @@
 import { NextRequest, NextResponse } from "next/server";
-import { isValidConfig } from '../../../config/base';
 
-const base = null;
-  apiKey: process.env.BASE_API_KEY!,
-  projectId: process.env.BASE_PROJECT_ID!,
-});
+// Mock user data for demo purposes
+const mockUsers: any = {};
+const mockPredictions: any = {};
 
 export async function GET(request: NextRequest, { params }: { params: { userId: string } }) {
   try {
-    const [userProfile, userPredictions, userStats] = await Promise.all([
-      base.users.get(params.userId),
-      base.predictions.list({ userId: params.userId, limit: 10 }),
-      base.users.getStats(params.userId)
-    ]);
+    const userProfile = mockUsers[params.userId] || {
+      id: params.userId,
+      displayName: 'User ' + params.userId,
+      bio: 'Prediction enthusiast',
+      avatarUrl: null,
+      joinedAt: new Date()
+    };
+
+    const userPredictions = mockPredictions[params.userId] || [];
+
+    const userStats = {
+      totalPredictions: userPredictions.length,
+      winRate: 0.65,
+      totalBets: 0
+    };
 
     return NextResponse.json({
       profile: userProfile,
@@ -29,11 +37,15 @@ export async function PUT(request: NextRequest, { params }: { params: { userId: 
     const body = await request.json();
     const { displayName, bio, avatarUrl } = body;
 
-    const updatedProfile = await base.users.update(params.userId, {
+    const updatedProfile = {
+      id: params.userId,
       displayName,
       bio,
-      avatarUrl
-    });
+      avatarUrl,
+      updatedAt: new Date()
+    };
+
+    mockUsers[params.userId] = updatedProfile;
 
     return NextResponse.json(updatedProfile);
   } catch (error: any) {
