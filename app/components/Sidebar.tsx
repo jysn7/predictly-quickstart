@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import { Home, Radio, Target, Users, Trophy, LayoutDashboard, Settings, Menu, X, Zap } from "lucide-react";
 
 declare global {
   interface Window {
@@ -147,29 +148,52 @@ export default function Sidebar() {
         aria-label="Open menu"
         onClick={() => setOpen(true)}
       >
-        &#9776;
+        <Menu size={24} />
       </button>
 
       {/* Main sidebar */}
       <aside className={`sidebar ${open ? "open" : ""}`}>
         {/* Logo & Brand */}
         <div className="brand">
-          <div style={{width:36,height:36,background:'var(--accent)',borderRadius:8}} />
+          <div style={{width:36,height:36,background:'var(--accent)',borderRadius:8,display:'flex',alignItems:'center',justifyContent:'center'}}>
+            <Zap size={20} color="white" />
+          </div>
           <div>
             <div style={{fontWeight:"700"}}>Predictly</div>
-            <div style={{fontSize:12,color:'var(--muted)'}}>Predict & share</div>
+            <div style={{fontSize:12,color:'var(--muted)'}}>Predict & Win</div>
           </div>
         </div>
 
         {/* Navigation Links */}
         <nav className="nav">
-          <Link href="/" className="nav-link" onClick={() => setOpen(false)}>Home</Link>
-          <Link href="/feed" className="nav-link" onClick={() => setOpen(false)}>Feed</Link>
-          <Link href="/predict" className="nav-link" onClick={() => setOpen(false)}>Predict</Link>
-          <Link href="/community-bets" className="nav-link" onClick={() => setOpen(false)}>Community</Link>
-          <Link href="/leaderboard" className="nav-link" onClick={() => setOpen(false)}>Leaderboard</Link>
-          <Link href="/dashboard" className="nav-link" onClick={() => setOpen(false)}>Dashboard</Link>
-          <Link href="/settings" className="nav-link" onClick={() => setOpen(false)}>Settings</Link>
+          <Link href="/" className="nav-link" onClick={() => setOpen(false)}>
+            <Home size={20} />
+            <span>Home</span>
+          </Link>
+          <Link href="/feed" className="nav-link" onClick={() => setOpen(false)}>
+            <Radio size={20} />
+            <span>Feed</span>
+          </Link>
+          <Link href="/predict" className="nav-link" onClick={() => setOpen(false)}>
+            <Target size={20} />
+            <span>Predict</span>
+          </Link>
+          <Link href="/community-bets" className="nav-link" onClick={() => setOpen(false)}>
+            <Users size={20} />
+            <span>Community</span>
+          </Link>
+          <Link href="/leaderboard" className="nav-link" onClick={() => setOpen(false)}>
+            <Trophy size={20} />
+            <span>Leaderboard</span>
+          </Link>
+          <Link href="/dashboard" className="nav-link" onClick={() => setOpen(false)}>
+            <LayoutDashboard size={20} />
+            <span>Dashboard</span>
+          </Link>
+          <Link href="/settings" className="nav-link" onClick={() => setOpen(false)}>
+            <Settings size={20} />
+            <span>Settings</span>
+          </Link>
         </nav>
 
         {/* Connect Button */}
@@ -232,7 +256,7 @@ export default function Sidebar() {
           onClick={() => setOpen(false)}
           style={{display: open ? 'block' : 'none'}}
         >
-          ✕
+          <X size={20} />
         </button>
       </aside>
     </>

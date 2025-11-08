@@ -9,7 +9,7 @@ import { callAiOrMock } from "../utils/demo";
 import { getUpcomingMatches, searchMatches, formatMatchDate, getDayName, getFullMatchDateTime, getSports, type Match } from "../utils/sports";
 import { getEnhancedMatchData, generateStatisticalPrediction } from "../utils/sportsdb";
 import { getBalance, placeBet as placeBetAPI } from "../utils/coinSystem";
-import { Coins } from "lucide-react";
+import { Banknote, BanknoteIcon, Calendar, Coins, MapPin, Sparkles, Loader2, Check, Target, BarChart3, Lightbulb, Pin } from "lucide-react";
 
 export default function Predict() {
   const router = useRouter();
@@ -336,16 +336,40 @@ export default function Predict() {
                             <span style={{ margin: '0 8px' }}>•</span>
                             <span>{match.sport}</span>
                           </div>
-                          <div>📅 {getFullMatchDateTime(match.date, match.time)}</div>
-                          <div>📍 {match.location}</div>
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
+                            <Calendar size={14} /> {getFullMatchDateTime(match.date, match.time)}
+                          </div>
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
+                            <MapPin size={14} /> {match.location}
+                          </div>
                         </div>
                       </div>
                       <div style={{ textAlign: 'right', minWidth: '120px', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
                         <div 
                           onClick={() => setSelectedMatch(match)}
-                          style={{ color: 'var(--accent)', fontSize: '0.875rem', fontWeight: '600', backgroundColor: 'rgba(124, 58, 237, 0.15)', padding: '6px 12px', borderRadius: '6px', display: 'inline-block', cursor: 'pointer' }}
+                          style={{ 
+                            color: 'var(--accent)', 
+                            fontSize: '0.875rem', 
+                            fontWeight: '600', 
+                            backgroundColor: 'rgba(124, 58, 237, 0.15)', 
+                            padding: '6px 12px', 
+                            borderRadius: '6px', 
+                            display: 'flex', 
+                            alignItems: 'center', 
+                            justifyContent: 'center',
+                            gap: '0.35rem',
+                            cursor: 'pointer' 
+                          }}
                         >
-                          {selectedMatch?.id === match.id ? '✓ Selected' : 'Analyze'}
+                          {selectedMatch?.id === match.id ? (
+                            <>
+                              <Check size={14} /> Selected
+                            </>
+                          ) : (
+                            <>
+                              <Target size={14} /> Analyze
+                            </>
+                          )}
                         </div>
                         <button
                           onClick={(e) => {
@@ -362,11 +386,15 @@ export default function Predict() {
                             fontWeight: '600',
                             cursor: 'pointer',
                             transition: 'all 0.2s',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            gap: '0.35rem',
                           }}
                           onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = '#16a34a')}
                           onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = '#22c55e')}
                         >
-                          💰 Place Bet
+                          <BanknoteIcon size={14} /> Place Bet
                         </button>
                       </div>
                     </div>
@@ -387,11 +415,11 @@ export default function Predict() {
             <h3 className="sidebar-title">Generate Prediction</h3>
             {selectedMatch ? (
               <>
-                <div style={{ marginBottom: '1rem', color: 'var(--text-secondary)', fontSize: '0.85rem', backgroundColor: 'rgba(124, 58, 237, 0.1)', padding: '0.75rem', borderRadius: '6px' }}>
-                  <div style={{ fontWeight: '600', color: 'var(--accent)', marginBottom: '0.5rem' }}>
-                    📌 Selected Match
+                <div style={{ marginBottom: '1rem', color: 'var(--text-secondary)', fontSize: '0.85rem', backgroundColor: 'rgba(124, 58, 237, 0.1)', padding: '0.75rem', borderRadius: '6px', border: '1px solid rgba(124, 58, 237, 0.3)' }}>
+                  <div style={{ fontWeight: '600', color: 'var(--accent)', marginBottom: '0.5rem', display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
+                    <Target size={14} /> Selected Match
                   </div>
-                  <div>{selectedMatch.homeTeam} vs {selectedMatch.awayTeam}</div>
+                  <div style={{ color: 'var(--text)' }}>{selectedMatch.homeTeam} vs {selectedMatch.awayTeam}</div>
                   <div style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', marginTop: '0.5rem' }}>
                     {getFullMatchDateTime(selectedMatch.date, selectedMatch.time)}
                   </div>
@@ -400,9 +428,17 @@ export default function Predict() {
                   onClick={handlePredict} 
                   className="btn-primary"
                   disabled={isLoading}
-                  style={{ width: '100%' }}
+                  style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem' }}
                 >
-                  {isLoading ? '⏳ Generating...' : '✨ Get AI Prediction'}
+                  {isLoading ? (
+                    <>
+                      <Loader2 size={16} className="animate-spin" /> Generating...
+                    </>
+                  ) : (
+                    <>
+                      <Sparkles size={16} /> Get AI Prediction
+                    </>
+                  )}
                 </button>
               </>
             ) : (
@@ -413,7 +449,9 @@ export default function Predict() {
           </div>
 
           <div className="card">
-            <h3 className="sidebar-title">Statistics</h3>
+            <h3 className="sidebar-title" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+              <BarChart3 size={16} /> Statistics
+            </h3>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', color: 'var(--text-secondary)', fontSize: '0.9rem' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                 <span>Total Matches:</span>
@@ -435,7 +473,9 @@ export default function Predict() {
           </div>
 
           <div className="card">
-            <h3 className="sidebar-title">Search Tips</h3>
+            <h3 className="sidebar-title" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+              <Lightbulb size={16} /> Search Tips
+            </h3>
             <ul style={{ margin: 0, paddingLeft: '1.2rem', fontSize: '0.85rem', color: 'var(--text-secondary)', lineHeight: '1.6' }}>
               <li>Team names: "Manchester"</li>
               <li>Leagues: "Premier League"</li>

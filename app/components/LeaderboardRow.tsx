@@ -1,3 +1,5 @@
+import { Flame } from 'lucide-react';
+
 export interface LeaderboardRowProps {
   rank: number;
   username: string;
@@ -49,7 +51,9 @@ export default function LeaderboardRow({
         </div>
         <div style={{ backgroundColor: 'var(--surface)', padding: '0.75rem', borderRadius: 'var(--radius)' }}>
           <div style={{ color: 'var(--text-secondary)' }} className="text-sm">Win Streak</div>
-          <div className="text-text font-bold">🔥 {winStreak}</div>
+          <div className="text-text font-bold" style={{ display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
+            <Flame size={16} style={{ color: '#f59e0b' }} /> {winStreak}
+          </div>
         </div>
         <div style={{ backgroundColor: 'var(--surface)', padding: '0.75rem', borderRadius: 'var(--radius)' }}>
           <div style={{ color: 'var(--text-secondary)' }} className="text-sm">Last Prediction</div>

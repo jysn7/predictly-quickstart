@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { MapPin, Calendar, Heart, Share2 } from 'lucide-react';
 
 interface BetCardProps {
   bet: {
@@ -136,11 +137,11 @@ export default function BetCard({
         <div style={{ fontSize: '14px', color: '#ccc', marginBottom: '5px' }}>
           <strong>{bet.homeTeam}</strong> vs <strong>{bet.awayTeam}</strong>
         </div>
-        <div style={{ fontSize: '12px', color: '#999' }}>
-          📍 {bet.location}
+        <div style={{ fontSize: '12px', color: '#999', display: 'flex', alignItems: 'center', gap: '5px' }}>
+          <MapPin size={12} /> {bet.location}
         </div>
-        <div style={{ fontSize: '12px', color: '#999' }}>
-          📅 {bet.matchDateTime}
+        <div style={{ fontSize: '12px', color: '#999', display: 'flex', alignItems: 'center', gap: '5px' }}>
+          <Calendar size={12} /> {bet.matchDateTime}
         </div>
       </div>
 
@@ -215,7 +216,7 @@ export default function BetCard({
             }
           }}
         >
-          {isLiked ? '❤️' : '🤍'} {bet.likes}
+          <Heart size={14} fill={isLiked ? '#a78bfa' : 'none'} /> {bet.likes}
         </button>
 
         <button
@@ -245,7 +246,7 @@ export default function BetCard({
             (e.currentTarget as HTMLButtonElement).style.color = '#999';
           }}
         >
-          📤 Share
+          <Share2 size={14} /> Share
         </button>
       </div>
     </div>

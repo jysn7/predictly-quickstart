@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { getBalance } from '@/app/utils/coinSystem';
-import { Coins } from 'lucide-react';
+import { Coins, Lightbulb } from 'lucide-react';
 
 interface CoinBalanceDisplayProps {
   walletAddress: string;
@@ -110,8 +110,9 @@ export default function CoinBalanceDisplay({
         </div>
       </div>
 
-      <div style={{ marginTop: '1rem', fontSize: '0.85rem', color: 'var(--text-secondary)' }}>
-        💡 Use your PDC coins to place bets on upcoming matches!
+      <div style={{ marginTop: '1rem', fontSize: '0.85rem', color: 'var(--text-secondary)', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+        <Lightbulb size={16} style={{ color: 'var(--accent)' }} />
+        Use your PDC coins to place bets on upcoming matches!
       </div>
     </div>
   );

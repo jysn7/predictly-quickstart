@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import styles from '../page.module.css';
+import { CheckCheck, Sparkles, MapPin, Bot, BarChart3, Share2 } from 'lucide-react';
 
 interface PredictionResultModalProps {
   isOpen: boolean;
@@ -131,8 +132,8 @@ export default function PredictionResultModal({
       >
         {/* Header */}
         <div style={{ marginBottom: '30px' }}>
-          <h1 style={{ margin: '0 0 10px 0', fontSize: '24px', color: '#fff' }}>
-            Prediction Generated ✨
+          <h1 style={{ margin: '0 0 10px 0', fontSize: '24px', color: '#fff', display: 'flex', alignItems: 'center', gap: '8px' }}>
+            Prediction Generated <Sparkles size={20} style={{ color: '#a78bfa' }} />
           </h1>
           <p style={{ margin: 0, color: '#999', fontSize: '14px' }}>
             {getDayName()} • {match.time}
@@ -157,8 +158,8 @@ export default function PredictionResultModal({
               <span style={{ margin: '0 15px', color: '#666' }}>vs</span>
               <span>{match.awayTeam}</span>
             </div>
-            <p style={{ margin: '10px 0 0 0', fontSize: '12px', color: '#666' }}>
-              📍 {match.location}
+            <p style={{ margin: '10px 0 0 0', fontSize: '12px', color: '#666', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '5px' }}>
+              <MapPin size={14} /> {match.location}
             </p>
           </div>
         </div>
@@ -213,12 +214,24 @@ export default function PredictionResultModal({
           </div>
 
           <div style={{ marginTop: '20px', paddingTop: '20px', borderTop: '1px solid #333' }}>
-            <p style={{ margin: '0 0 5px 0', fontSize: '12px', color: '#999', textTransform: 'uppercase' }}>
-              Reasoning
+            <p style={{ margin: '0 0 10px 0', fontSize: '12px', color: '#999', textTransform: 'uppercase', fontWeight: '600', display: 'flex', alignItems: 'center', gap: '6px' }}>
+              <Bot size={14} /> AI Analysis
             </p>
-            <p style={{ margin: '5px 0 0 0', fontSize: '14px', color: '#ccc', lineHeight: '1.6' }}>
+            <div 
+              style={{ 
+                margin: '5px 0 0 0', 
+                padding: '16px', 
+                fontSize: '14px', 
+                color: '#e9d5ff', 
+                lineHeight: '1.8',
+                backgroundColor: 'rgba(139, 92, 246, 0.15)',
+                border: '1px solid rgba(139, 92, 246, 0.4)',
+                borderRadius: '8px',
+                whiteSpace: 'pre-line'
+              }}
+            >
               {prediction.reasoning}
-            </p>
+            </div>
           </div>
         </div>
 
@@ -233,8 +246,8 @@ export default function PredictionResultModal({
               border: '1px solid #333',
             }}
           >
-            <p style={{ margin: '0 0 15px 0', fontSize: '12px', color: '#999', textTransform: 'uppercase', fontWeight: '600' }}>
-              📊 Team Statistics
+            <p style={{ margin: '0 0 15px 0', fontSize: '12px', color: '#999', textTransform: 'uppercase', fontWeight: '600', display: 'flex', alignItems: 'center', gap: '6px' }}>
+              <BarChart3 size={14} /> Team Statistics
             </p>
             
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
@@ -312,9 +325,17 @@ export default function PredictionResultModal({
               cursor: isSaving || isSaved ? 'not-allowed' : 'pointer',
               opacity: isSaving || isSaved ? 0.6 : 1,
               transition: 'all 0.3s ease',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: '8px'
             }}
           >
-            {isSaving ? 'Saving...' : isSaved ? '✓ Saved to Profile' : 'Save to Profile'}
+            {isSaving ? 'Saving...' : isSaved ? (
+              <>
+                <CheckCheck size={16} /> Saved to Profile
+              </>
+            ) : 'Save to Profile'}
           </button>
 
           {isSaved && (
@@ -331,6 +352,10 @@ export default function PredictionResultModal({
                 fontWeight: '600',
                 cursor: 'pointer',
                 transition: 'all 0.3s ease',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '8px'
               }}
               onMouseEnter={(e) => {
                 (e.target as HTMLButtonElement).style.backgroundColor = '#2563eb';
@@ -339,7 +364,7 @@ export default function PredictionResultModal({
                 (e.target as HTMLButtonElement).style.backgroundColor = '#3b82f6';
               }}
             >
-              📤 Share Prediction
+              <Share2 size={16} /> Share Prediction
             </button>
           )}
         </div>
@@ -379,9 +404,13 @@ export default function PredictionResultModal({
               color: '#22c55e',
               fontSize: '12px',
               textAlign: 'center',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: '8px'
             }}
           >
-            ✓ Share link copied to clipboard!
+            <CheckCheck size={16} /> Share link copied to clipboard!
           </div>
         )}
       </div>

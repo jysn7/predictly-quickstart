@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { callAiOrMock } from "../utils/demo";
+import { Loader2, Sparkles, Bot } from "lucide-react";
 
 interface FeedItemProps {
   user: string;
@@ -42,14 +43,49 @@ export default function FeedItem({ user, match, winner, confidence }: FeedItemPr
         <div className="feed-item-stats">
           <div style={{ color: 'var(--accent)', fontSize: '1.5rem', fontWeight: '700' }}>{confidence}%</div>
           <div className="confidence-label">Confidence</div>
-          <button className="btn-secondary" onClick={explain} style={{ marginTop: '0.75rem', width: '100%' }}>{loadingAi ? 'Thinking…' : 'Explain'}</button>
+          <button className="btn-secondary" onClick={explain} style={{ marginTop: '0.75rem', width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem' }}>
+            {loadingAi ? (
+              <>
+                <Loader2 size={16} className="animate-spin" />
+                Thinking...
+              </>
+            ) : (
+              <>
+                <Sparkles size={16} />
+                Explain
+              </>
+            )}
+          </button>
         </div>
       </div>
 
       {aiText && (
         <div className="card" style={{ marginTop: '1rem' }}>
-          <div style={{ color: 'var(--text)', marginBottom: '0.75rem', fontWeight: '600' }}>AI Explanation</div>
-          <div style={{ color: 'var(--text-secondary)', whiteSpace: 'pre-wrap', fontSize: '0.95rem', lineHeight: '1.5' }}>{aiText}</div>
+          <div style={{ 
+            display: 'flex', 
+            alignItems: 'center', 
+            gap: '0.5rem',
+            color: '#999', 
+            marginBottom: '0.75rem', 
+            fontWeight: '600',
+            fontSize: '0.75rem',
+            textTransform: 'uppercase'
+          }}>
+            <Bot size={16} />
+            AI Explanation
+          </div>
+          <div style={{ 
+            padding: '16px',
+            color: '#e9d5ff', 
+            whiteSpace: 'pre-wrap', 
+            fontSize: '0.95rem', 
+            lineHeight: '1.8',
+            backgroundColor: 'rgba(139, 92, 246, 0.15)',
+            border: '1px solid rgba(139, 92, 246, 0.4)',
+            borderRadius: '8px'
+          }}>
+            {aiText}
+          </div>
         </div>
       )}
     </>

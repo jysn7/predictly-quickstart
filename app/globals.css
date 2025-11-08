@@ -521,18 +521,25 @@ p {
   top: 0;
   bottom: 0;
   overflow-y: auto;
-  display: none;
+  display: flex;
+  flex-direction: column;
+  z-index: 100;
 }
 
 @media (min-width: 900px) {
   .sidebar {
-    display: block;
-    position: static;
+    display: flex;
   }
 }
 
-.sidebar.open {
-  display: block;
+@media (max-width: 899px) {
+  .sidebar {
+    display: none;
+  }
+  
+  .sidebar.open {
+    display: flex;
+  }
 }
 
 .brand {
@@ -576,7 +583,9 @@ p {
   padding: 0.75rem 1rem;
   border-radius: var(--radius);
   transition: all var(--transition-fast);
-  display: block;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
   position: relative;
 }
 
@@ -595,6 +604,13 @@ p {
 
 .main-content {
   flex: 1;
+  margin-left: 0;
+}
+
+@media (min-width: 900px) {
+  .main-content {
+    margin-left: 260px;
+  }
 }
 
 @media (max-width: 900px) {
@@ -668,6 +684,15 @@ p {
 @keyframes pulse {
   0%, 100% { opacity: 1; }
   50% { opacity: 0.5; }
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.animate-spin {
+  animation: spin 1s linear infinite;
 }
 
 /* Profile Grid */
