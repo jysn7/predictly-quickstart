@@ -48,11 +48,6 @@ export default function Feed() {
     <main className="page-container">
       <div className="page-header">
         <h1 className="page-title">Global Feed</h1>
-        <select className="select-input" value={selectedSport} onChange={e => setSelectedSport(e.target.value)} style={{ width: '150px' }}>
-          {sports.map(sport => (
-            <option key={sport} value={sport}>{sport}</option>
-          ))}
-        </select>
       </div>
 
       <div className="feed-layout">
@@ -113,6 +108,20 @@ export default function Feed() {
 
         {/* Sidebar - Fixed on desktop, stacked on mobile */}
         <aside className="feed-sidebar hide-scrollbar">
+          <div className="sidebar-card">
+            <h3 className="sidebar-title">Filter by Sport</h3>
+            <select 
+              className="select-input" 
+              value={selectedSport} 
+              onChange={e => setSelectedSport(e.target.value)} 
+              style={{ width: '100%', marginTop: '0.5rem' }}
+            >
+              {sports.map(sport => (
+                <option key={sport} value={sport}>{sport}</option>
+              ))}
+            </select>
+          </div>
+
           <div className="sidebar-card">
             <h3 className="sidebar-title">Trending Matches</h3>
             <ul className="sidebar-list">

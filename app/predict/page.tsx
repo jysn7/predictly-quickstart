@@ -237,28 +237,8 @@ export default function Predict() {
 
   return (
     <main className="page-container">
-      <div className="page-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+      <div className="page-header">
         <h1 className="page-title">Upcoming Matches</h1>
-        <button
-          onClick={handleBuyCoins}
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: '0.5rem',
-            padding: '0.75rem 1.5rem',
-            backgroundColor: 'var(--accent)',
-            color: 'white',
-            border: 'none',
-            borderRadius: '6px',
-            fontWeight: '600',
-            cursor: 'pointer',
-            fontSize: '0.95rem',
-          }}
-        >
-          <Coins size={18} />
-          <span>{coinBalance.toFixed(0)}</span>
-          <span>Buy Coins</span>
-        </button>
       </div>
 
       {selectedMatch && result && (
@@ -455,6 +435,50 @@ export default function Predict() {
 
         {/* Sidebar - Fixed on desktop, stacked on mobile */}
         <aside className="predict-sidebar hide-scrollbar">
+          <div className="card">
+            <h3 className="sidebar-title" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '1rem' }}>
+              <Coins size={16} /> Your Balance
+            </h3>
+            <div style={{ 
+              padding: '1rem', 
+              background: 'rgba(124, 58, 237, 0.1)', 
+              borderRadius: '8px',
+              marginBottom: '1rem',
+              textAlign: 'center'
+            }}>
+              <div style={{ fontSize: '2rem', fontWeight: '700', color: 'var(--accent)', marginBottom: '0.5rem' }}>
+                {coinBalance.toFixed(0)} PDC
+              </div>
+              <div style={{ fontSize: '0.85rem', color: 'var(--text-secondary)' }}>
+                Available for betting
+              </div>
+            </div>
+            <button
+              onClick={handleBuyCoins}
+              style={{
+                width: '100%',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '0.5rem',
+                padding: '0.75rem 1.5rem',
+                backgroundColor: 'var(--accent)',
+                color: 'white',
+                border: 'none',
+                borderRadius: '6px',
+                fontWeight: '600',
+                cursor: 'pointer',
+                fontSize: '0.95rem',
+                transition: 'all 0.2s',
+              }}
+              onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = 'var(--accent-hover)')}
+              onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = 'var(--accent)')}
+            >
+              <Coins size={18} />
+              <span>Buy More Coins</span>
+            </button>
+          </div>
+
           <div className="card">
             <h3 className="sidebar-title">Generate Prediction</h3>
             {selectedMatch ? (
